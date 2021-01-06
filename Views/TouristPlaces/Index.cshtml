@@ -1,0 +1,70 @@
+﻿@model IEnumerable<PracticeMVC.Models.TouristPlaceViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div id="LIST-PAGE">
+    <div class="search">
+        @using (Html.BeginForm("SearchTouristPlace", "TouristPlaces", FormMethod.Get))
+        {
+            <input type="text"
+                   name="Search"
+                   id="SEARCH-NAME"
+                   placeholder="Enter name to search" />
+
+            <input type="submit" value="Search" class="btn btn-default" />
+        }
+    </div>
+    <div class="container-grid">
+        <div class="flex-container hd">
+            <h4>NAME</h4>
+            <div class="sort-arrow">
+                <p><a class="arrow up" href="@Url.Action("SortData", "TouristPlaces", new { asc = true })"></a></p>
+                <p><a class="arrow down" href="@Url.Action("SortData", "TouristPlaces", new { asc = false })"></a></p>
+            </div>
+        </div>
+        <div class="flex-container hd">
+            <h4>ADDRESS</h4>
+        </div>
+        <div class="flex-container hd">
+            <h4>TYPE</h4>
+        </div>
+        <div class="flex-container hd">
+            <h4>RATING</h4>
+        </div>
+        <div class="flex-container hd">
+            <h4>PICTURE</h4>
+        </div>
+        <div class="flex-container hd">
+            <h4>ACTION</h4>
+        </div>
+
+
+        @foreach (var item in Model)
+        {
+            <div class="flex-container">
+                @Html.DisplayFor(modelItem => item.Name)
+            </div>
+            <div class="flex-container">
+                @Html.DisplayFor(modelItem => item.Address)
+            </div>
+            <div class="flex-container">
+                @Html.DisplayFor(modelItem => item.Type)
+            </div>
+            <div class="flex-container">
+                @Html.DisplayFor(modelItem => item.Rating)
+            </div>
+            <div class="flex-container">
+                <img src="@Url.Content(item.Image)" alt="image" />
+            </div>
+            <div class="flex-container">
+                @Html.ActionLink("Update", "Edit", new { id = item.ID }, new { @class = "button update" })
+                @Html.ActionLink("Delete", "Delete", new { id = item.ID }, new { @class = "button delete" })
+            </div>
+        }
+    </div>
+    <div>
+        @Html.ActionLink("Create New Tourist Place", "Create", new { }, new { @id = "NEW-PLACE-BT" })
+    </div>
+</div>
